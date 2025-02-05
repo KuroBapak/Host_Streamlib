@@ -64,7 +64,4 @@ plot_pca()
 plot_histogram()
 plot_population_vs_sample()
 
-st.write("Developed with ❤️ using Streamlit")
-st.write("1. Rayhan Roshidi Nasrulloh")
-st.write("2. Syah Reza Falevi")
-st.write("3. Reza Fahlevi")
+st.write("bamor still learning")
