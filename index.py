@@ -147,7 +147,7 @@ def plot_kmeans_clusters():
 # -------------------------------
 # Streamlit Main UI
 # -------------------------------
-st.title("Advanced Data Visualization Dashboard")
+st.title("Y allah selamatkan aku dari sir tws")
 st.write("### Dataset Overview")
 st.dataframe(data.head())
 st.write("### Descriptive Statistics")
