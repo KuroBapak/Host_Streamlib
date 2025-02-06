@@ -7,10 +7,16 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 
 # -------------------------------
-# Load and prepare data
+# File Uploader to Choose CSV File
 # -------------------------------
-file_path = "data.csv"
-df = pd.read_csv(file_path, header=None)
+uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type=["csv"])
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file, header=None)
+else:
+    # Use default CSV file if none is uploaded
+    file_path = "data.csv"
+    df = pd.read_csv(file_path, header=None)
+
 df.columns = [f"Feature_{i}" for i in range(df.shape[1])]
 
 # -------------------------------
@@ -190,4 +196,3 @@ elif visualization == "K-Means Clustering":
     plot_kmeans_clusters()
 
 st.write("bamor still learning")
-
