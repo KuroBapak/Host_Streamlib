@@ -240,7 +240,7 @@ def query_ollama(prompt, data_context):
 # -------------------------------
 # Streamlit Main UI
 # -------------------------------
-st.title("Y allah selamatkan aku dari sir tws")
+st.title("well its datas")
 st.write("### Dataset Overview")
 st.dataframe(data.head())
 st.write("### Descriptive Statistics")
