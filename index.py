@@ -81,6 +81,70 @@ st.markdown("""
 This scatter plot examines the relationship between earthquake depth and magnitude. The regression trendline (using ordinary least squares) indicates whether there is a correlation between how deep an earthquake occurs and its magnitude. For example, if the trendline is downward sloping, it suggests that deeper earthquakes might tend to have lower magnitudes.
 """)
 
+# Additional Analysis: High-Risk Earthquakes for Building Resilience
+st.header("High-Risk Earthquakes for Building Resilience")
+st.markdown("""
+**Explanation:**  
+For designing structures to withstand earthquakes, it's crucial to identify high-risk events. Earthquakes that occur at shallow depths often generate stronger ground shaking, particularly when the magnitude is high. By adjusting the critical thresholds for depth and magnitude, we can pinpoint these high-risk events which should be considered when updating building codes.
+""")
+
+# Sliders for critical thresholds
+critical_depth = st.slider("Critical Depth Threshold (km)", 
+                           min_value=int(filtered_df['depth'].min()), 
+                           max_value=int(filtered_df['depth'].max()), value=30)
+critical_mag = st.slider("Critical Magnitude Threshold", 
+                         min_value=float(filtered_df['mag'].min()), 
+                         max_value=float(filtered_df['mag'].max()), value=5.5)
+
+# Identify high-risk events
+high_risk_df = filtered_df[(filtered_df['depth'] <= critical_depth) & (filtered_df['mag'] >= critical_mag)]
+st.write(f"Number of high-risk events (Depth <= {critical_depth} km and Magnitude >= {critical_mag}): {len(high_risk_df)}")
+
+# Plot the depth vs. magnitude scatter with high-risk events highlighted
+fig_hr, ax_hr = plt.subplots()
+sns.scatterplot(data=filtered_df, x='depth', y='mag', color='blue', label='Other Events', ax=ax_hr)
+sns.scatterplot(data=high_risk_df, x='depth', y='mag', color='red', label='High-Risk Events', ax=ax_hr)
+ax_hr.axvline(critical_depth, color='red', linestyle='--', label='Critical Depth Threshold')
+ax_hr.axhline(critical_mag, color='red', linestyle='--', label='Critical Magnitude Threshold')
+ax_hr.set_xlabel("Depth (km)")
+ax_hr.set_ylabel("Magnitude")
+ax_hr.set_title("High-Risk Earthquake Events (for Building Requirements)")
+ax_hr.legend()
+st.pyplot(fig_hr)
+st.markdown("""
+**Discussion:**  
+Earthquakes occurring at shallow depths with high magnitudes pose the greatest risk to structures. These events produce intense ground shaking, which can lead to catastrophic damage if buildings are not designed to withstand such forces. This analysis helps identify conditions under which enhanced building standards and earthquake-resistant construction techniques are most critical.
+""")
+
+# New Section: Recommended Pillar Depth for Earthquake-Resistant Structures
+st.header("Recommended Pillar Depth for Earthquake-Resistant Structures")
+st.markdown("""
+**Explanation:**  
+For earthquake-resistant design, it's essential to have foundations that are deep enough to provide stability during seismic shaking. Based on simplified engineering guidelines (and supported by various studies and building codes), a rule of thumb is:
+    
+    **Recommended Pillar Depth (m) = (Magnitude - 3) + 2  (for Magnitude ≥ 3)**
+    
+This means that as the earthquake magnitude increases, the recommended minimum embedment depth of the foundation should also increase. For example:
+- A magnitude 4 event suggests a minimum depth of ~3 m.
+- A magnitude 6 event suggests a minimum depth of ~5 m.
+- A magnitude 7 event suggests a minimum depth of ~6 m.
+    
+These values are illustrative and must be adjusted according to local soil conditions, building requirements, and safety factors.
+""")
+
+# Create recommended pillar depth data for a range of magnitudes
+magnitude_range = np.linspace(3, 8, 50)  # Considering magnitudes from 3 to 8
+recommended_depth = (magnitude_range - 3) + 2
+
+# Plot the recommended pillar depth vs earthquake magnitude
+fig_rec, ax_rec = plt.subplots()
+ax_rec.plot(magnitude_range, recommended_depth, color='green', label='Recommended Pillar Depth')
+ax_rec.set_xlabel("Earthquake Magnitude")
+ax_rec.set_ylabel("Recommended Pillar Depth (m)")
+ax_rec.set_title("Recommended Minimum Pillar Depth vs Earthquake Magnitude")
+ax_rec.legend()
+st.pyplot(fig_rec)
+
 # Visualization 3: Time Series of Earthquake Magnitudes
 st.header("Magnitude Over Time")
 fig3 = px.line(filtered_df, x='datetime', y='mag', title="Earthquake Magnitudes Over Time")
@@ -105,7 +169,7 @@ ax_roll.legend()
 st.pyplot(fig_roll)
 st.markdown("""
 **Explanation:**  
-The rolling average plot smooths out daily fluctuations in earthquake magnitudes using a 30-day window. This helps reveal longer-term trends and patterns in seismic activity that might be obscured by daily variability.
+This rolling average plot smooths out daily fluctuations in earthquake magnitudes using a 30-day window, revealing longer-term trends in seismic activity.
 """)
 
 # Visualization 4: Geographical Distribution
@@ -126,26 +190,26 @@ ax_corr.set_title("Correlation Heatmap")
 st.pyplot(fig_corr)
 st.markdown("""
 **Explanation:**  
-The correlation heatmap shows the strength and direction of the linear relationship between earthquake depth and magnitude. A correlation coefficient closer to 1 or -1 indicates a strong relationship, whereas a value near 0 indicates little or no linear correlation.
+The correlation heatmap shows the strength and direction of the linear relationship between earthquake depth and magnitude. A coefficient near 1 or -1 indicates a strong relationship, while a value near 0 indicates little or no linear correlation.
 """)
 
 # Conclusion Section
 st.header("Conclusion and Implications")
 st.markdown("""
 **Conclusion:**  
-This comprehensive analysis of Indonesian earthquake data reveals several key insights:  
-- **Magnitude Distribution:** The histogram and CDF indicate how frequently earthquakes of various magnitudes occur, which is crucial for understanding seismic risk.  
-- **Depth-Magnitude Relationship:** The scatter plot with a regression line provides insight into how earthquake depth might influence the magnitude, which can be significant for seismological research and hazard assessment.  
-- **Temporal Trends:** The time series and rolling average analyses help identify trends and anomalies over time, indicating periods of increased seismic activity.  
-- **Spatial Distribution:** The map visualization highlights regions with high earthquake density, which is vital for emergency preparedness and regional planning.  
-- **Correlation Analysis:** The heatmap confirms the relationships between key variables, which is helpful for further statistical modeling and risk forecasting.
+This comprehensive analysis of Indonesian earthquake data reveals several key insights:
+- **Magnitude Distribution:** The histogram and CDF illustrate the frequency and cumulative probability of different earthquake magnitudes, which is vital for risk assessment.
+- **Depth-Magnitude Relationship:** The scatter plot with regression provides insight into how earthquake depth might affect magnitude. Notably, shallow, high-magnitude events (highlighted in our high-risk analysis) are critical for building resilience.
+- **Building Resilience:** The additional analysis on recommended pillar depth suggests that as earthquake magnitude increases, deeper foundations (pillars) may be necessary to improve structural stability. Although simplified, this guideline can support preliminary design considerations for earthquake-resistant structures.
+- **Temporal Trends:** Time series and rolling average analyses reveal trends and anomalies in seismic activity over time.
+- **Spatial Distribution:** The geographic map helps identify regions with high earthquake density, crucial for regional planning and emergency response.
+- **Correlation Analysis:** The heatmap confirms the relationship between key variables, supporting further statistical modeling.
 
-**Implications and Problems Addressed:**  
-- **Risk Assessment and Mitigation:** By understanding the distribution and frequency of earthquakes, authorities can better prepare for seismic events and allocate resources for emergency response.  
-- **Urban and Infrastructure Planning:** The insights into spatial distribution and depth-magnitude relationships assist in planning safer urban developments and infrastructure improvements in high-risk areas.  
-- **Scientific Research:** The statistical relationships and temporal trends provide valuable data for seismologists and researchers working on earthquake prediction models.  
-- **Public Awareness and Policy Making:** Clear visualizations and detailed analysis can support educational initiatives and inform policy decisions aimed at reducing earthquake-related risks.
+**Implications and Applications:**  
+- **Risk Mitigation:** Understanding the distribution of earthquake magnitudes and the depth-magnitude relationship can inform risk assessment and emergency preparedness strategies.
+- **Urban Planning and Building Codes:** Insights from the recommended pillar depth analysis can guide building code revisions and foundation design, particularly in regions prone to shallow, high-magnitude earthquakes.
+- **Engineering Research:** The visualizations provide a basis for more detailed studies on the seismic performance of structures, paving the way for advanced engineering models.
+- **Public Policy and Awareness:** Clear visualizations and data-driven insights support educational initiatives and policy decisions aimed at reducing earthquake-related risks.
 
-Overall, this dashboard not only offers a detailed statistical and probabilistic overview of seismic activity in Indonesia but also serves as a powerful tool for addressing practical challenges related to earthquake risk management and preparedness.
+Overall, this dashboard not only delivers a detailed statistical and probabilistic overview of seismic activity in Indonesia but also offers actionable insights for enhancing building resilience in earthquake-prone areas.
 """)
-
