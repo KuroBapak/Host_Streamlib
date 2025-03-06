@@ -128,3 +128,24 @@ st.markdown("""
 **Explanation:**  
 The correlation heatmap shows the strength and direction of the linear relationship between earthquake depth and magnitude. A correlation coefficient closer to 1 or -1 indicates a strong relationship, whereas a value near 0 indicates little or no linear correlation.
 """)
+
+# Conclusion Section
+st.header("Conclusion and Implications")
+st.markdown("""
+**Conclusion:**  
+This comprehensive analysis of Indonesian earthquake data reveals several key insights:  
+- **Magnitude Distribution:** The histogram and CDF indicate how frequently earthquakes of various magnitudes occur, which is crucial for understanding seismic risk.  
+- **Depth-Magnitude Relationship:** The scatter plot with a regression line provides insight into how earthquake depth might influence the magnitude, which can be significant for seismological research and hazard assessment.  
+- **Temporal Trends:** The time series and rolling average analyses help identify trends and anomalies over time, indicating periods of increased seismic activity.  
+- **Spatial Distribution:** The map visualization highlights regions with high earthquake density, which is vital for emergency preparedness and regional planning.  
+- **Correlation Analysis:** The heatmap confirms the relationships between key variables, which is helpful for further statistical modeling and risk forecasting.
+
+**Implications and Problems Addressed:**  
+- **Risk Assessment and Mitigation:** By understanding the distribution and frequency of earthquakes, authorities can better prepare for seismic events and allocate resources for emergency response.  
+- **Urban and Infrastructure Planning:** The insights into spatial distribution and depth-magnitude relationships assist in planning safer urban developments and infrastructure improvements in high-risk areas.  
+- **Scientific Research:** The statistical relationships and temporal trends provide valuable data for seismologists and researchers working on earthquake prediction models.  
+- **Public Awareness and Policy Making:** Clear visualizations and detailed analysis can support educational initiatives and inform policy decisions aimed at reducing earthquake-related risks.
+
+Overall, this dashboard not only offers a detailed statistical and probabilistic overview of seismic activity in Indonesia but also serves as a powerful tool for addressing practical challenges related to earthquake risk management and preparedness.
+""")
+
