@@ -38,7 +38,7 @@ else:
 if run:
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
-    )
+    )# --- 0.2(20%) 42 columns of data ---
 
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
@@ -46,21 +46,21 @@ if run:
 
     # --- SLP (no hidden layer) ---
     slp = MLPClassifier(hidden_layer_sizes=(), activation='logistic',
-                        max_iter=1000, random_state=42)
+    max_iter=1000, random_state=42)
     slp.fit(X_train, y_train)
     y_pred_slp = slp.predict(X_test)
     acc_slp = accuracy_score(y_test, y_pred_slp)
 
     # --- MLP (1 hidden layer) ---
     mlp = MLPClassifier(hidden_layer_sizes=(hidden_neurons,), activation='relu',
-                        max_iter=1000, random_state=42)
+    max_iter=1000, random_state=42)
     mlp.fit(X_train, y_train)
     y_pred_mlp = mlp.predict(X_test)
     acc_mlp = accuracy_score(y_test, y_pred_mlp)
 
     # === Show results in web UI ===
     st.subheader("Predictions")
-    st.text("The Prediction of 20% of the test data(42 Rows)")
+    st.text("The Prediction of the 80% of the train data and compared to 20% of the test data(42 Rows)")
     st.write("SLP (no hidden layer):")
     st.code(np.array2string(y_pred_slp, separator=', '), language='text')
     st.write("MLP (hidden layer = %d neurons):" % hidden_neurons)
