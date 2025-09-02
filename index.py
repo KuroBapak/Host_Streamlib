@@ -9,16 +9,15 @@ from sklearn.metrics import accuracy_score, classification_report
 st.title("Single-Layer Perceptron(SLP) Vs Multi-Layer Perceptron (MLP)")
 
 # === UI controls ===
-uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
+uploaded_file = st.file_uploader("Upload CSV file(Optional)", type=["csv"])
 hidden_neurons = st.slider("Hidden layer size (MLP)", min_value=1, max_value=50, value=10, step=1)
 st.text("The higher the value, the more neurons in the hidden layer. means it thinks more but not always better because the complexity of the data is too low, so the result vary a lot.")
 run = st.button("Run")
 
-if not uploaded_file:
-    st.stop()
-
-# === Load data ===
-df = pd.read_csv(uploaded_file)
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+else:
+    df = pd.read_csv("glass.csv")
 
 # Label = 'Type' if exists, else last column
 label_col = "Type" if "Type" in df.columns else df.columns[-1]
