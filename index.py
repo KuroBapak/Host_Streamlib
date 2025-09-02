@@ -16,7 +16,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-st.title("SLP vs MLP)")
+st.title("SLP vs MLP")
 
 # === UI controls ===
 uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
