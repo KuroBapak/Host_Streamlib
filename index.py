@@ -1,13 +1,3 @@
-# streamlit_final_original.py
-"""
-Original script adapted for Streamlit:
-- Upload your CSV (no Iris fallback, must provide file)
-- Uses all features + label (label = 'Type' if exists, else last column)
-- Runs SLP (no hidden layer, logistic activation)
-- Runs MLP (1 hidden layer with user-chosen neurons, relu activation)
-- Shows predictions & accuracy for both directly in web UI
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -16,11 +6,12 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-st.title("SLP vs MLP")
+st.title("Single-Layer Perceptron(SLP) Vs Multi-Layer Perceptron (MLP)")
 
 # === UI controls ===
 uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
 hidden_neurons = st.slider("Hidden layer size (MLP)", min_value=1, max_value=50, value=10, step=1)
+st.text("The higher the value, the more neurons in the hidden layer. means it thinks more but not always better because the complexity of the data is too low, so the result vary a lot.")
 run = st.button("Run")
 
 if not uploaded_file:
@@ -69,6 +60,7 @@ if run:
 
     # === Show results in web UI ===
     st.subheader("Predictions")
+    st.text("The Prediction of 20% of the test data(42 Rows)")
     st.write("SLP (no hidden layer):")
     st.code(np.array2string(y_pred_slp, separator=', '), language='text')
     st.write("MLP (hidden layer = %d neurons):" % hidden_neurons)
