@@ -21,7 +21,7 @@ from tensorflow.keras.layers import Dense, Input, Dropout, BatchNormalization
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
-st.title("NN, SVM, NV, RFT, KNN, DNN Runner (glass.csv only - fixed shapes)")
+st.title("NN, SVM, NV, RFT, KNN, DNN Runner")
 
 method = st.selectbox("Choose method", [
     "NEURAL NETWORK - MLP(NN)",
